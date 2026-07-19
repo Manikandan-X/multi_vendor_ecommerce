@@ -1,4 +1,4 @@
-# Multi-Vendor E-Commerce Backend
+# Multi-Vendor E-Commerce 
 
 A scalable RESTful backend application for a Multi-Vendor E-Commerce Platform built using **FastAPI**, **PostgreSQL**, **SQLAlchemy**, and **JWT Authentication**.
 
