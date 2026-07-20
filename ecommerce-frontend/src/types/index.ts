@@ -153,6 +153,26 @@ export interface OrderResponse {
   updated_at: string;
 }
 
+export interface OrderStatusUpdate {
+  status: OrderStatus;
+}
+
+// ---------- user.py (admin CRUD, added alongside orders) ----------
+export interface UserCreate {
+  full_name: string;
+  email: string;
+  password: string;
+  role: UserRole;
+}
+
+export interface UserUpdate {
+  full_name?: string;
+  email?: string;
+  role?: UserRole;
+  // NOTE: no is_active field on this schema — there's currently no way to
+  // deactivate a user from the admin UI. Flagging rather than faking it.
+}
+
 // ---------- payment.py ----------
 export interface PaymentCreate {
   payment_method: string;

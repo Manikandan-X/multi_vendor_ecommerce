@@ -10,6 +10,7 @@ export type UserRole = (typeof UserRole)[keyof typeof UserRole];
 
 export const OrderStatus = {
   PENDING: "PENDING",
+  PROCESSING: "PROCESSING",
   PAID: "PAID",
   SHIPPED: "SHIPPED",
   DELIVERED: "DELIVERED",

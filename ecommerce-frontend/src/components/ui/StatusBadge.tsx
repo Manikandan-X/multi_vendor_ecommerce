@@ -2,6 +2,7 @@ import { OrderStatus, PaymentStatus } from "../../constants/enums";
 
 const ORDER_STATUS_STYLE: Record<OrderStatus, string> = {
   [OrderStatus.PENDING]: "bg-muted/10 text-muted",
+  [OrderStatus.PROCESSING]: "bg-accent/15 text-accent-deep",
   [OrderStatus.PAID]: "bg-success/10 text-success",
   [OrderStatus.SHIPPED]: "bg-info/10 text-info",
   [OrderStatus.DELIVERED]: "bg-success/15 text-success",

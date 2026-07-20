@@ -1,5 +1,5 @@
 import { apiClient } from "./client";
-import type { OrderResponse } from "../types";
+import type { OrderResponse, OrderStatusUpdate } from "../types";
 
 // POST /orders/checkout  (role: CUSTOMER)
 // Returns an ARRAY of orders — checkout splits the customer's cart into one
@@ -18,6 +18,27 @@ export async function getMyOrders(): Promise<OrderResponse[]> {
 // GET /orders/vendor-orders  (role: VENDOR)
 export async function getVendorOrders(): Promise<OrderResponse[]> {
   const res = await apiClient.get<OrderResponse[]>("/orders/vendor-orders");
+  return res.data;
+}
+
+// GET /orders  (role: ADMIN)
+export async function getAllOrders(): Promise<OrderResponse[]> {
+  const res = await apiClient.get<OrderResponse[]>("/orders");
+  return res.data;
+}
+
+// PUT /orders/{order_id}/status  (role: VENDOR)
+export async function updateOrderStatus(
+  orderId: string,
+  data: OrderStatusUpdate
+): Promise<OrderResponse> {
+  const res = await apiClient.put<OrderResponse>(`/orders/${orderId}/status`, data);
+  return res.data;
+}
+
+// PUT /orders/{order_id}/cancel  (role: CUSTOMER)
+export async function cancelOrder(orderId: string): Promise<OrderResponse> {
+  const res = await apiClient.put<OrderResponse>(`/orders/${orderId}/cancel`);
   return res.data;
 }
 

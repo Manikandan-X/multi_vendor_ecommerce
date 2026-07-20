@@ -1,6 +1,8 @@
 import { useAllVendors } from "../../hooks/useVendors";
 import { useCategories } from "../../hooks/useCategories";
 import { useAllPayments } from "../../hooks/usePayments";
+import { useAllOrders } from "../../hooks/useOrders";
+import { useAllUsers } from "../../hooks/useUsers";
 import { StatCard } from "../../components/ui/StatCard";
 import { LoadingState, ErrorState } from "../../components/ui/States";
 import { getApiErrorMessage } from "../../lib/errors";
@@ -11,8 +13,12 @@ export default function AdminOverviewPage() {
   const vendors = useAllVendors();
   const categories = useCategories();
   const payments = useAllPayments();
+  const orders = useAllOrders();
+  const users = useAllUsers();
 
-  if (vendors.isLoading || categories.isLoading || payments.isLoading) return <LoadingState />;
+  if (vendors.isLoading || categories.isLoading || payments.isLoading || orders.isLoading || users.isLoading) {
+    return <LoadingState />;
+  }
   if (vendors.isError) return <ErrorState message={getApiErrorMessage(vendors.error)} />;
 
   const vendorList = vendors.data ?? [];
@@ -28,8 +34,8 @@ export default function AdminOverviewPage() {
 
       <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <StatCard label="Vendors" value={String(vendorList.length)} hint={`${pendingVendors.length} pending approval`} />
-        <StatCard label="Categories" value={String(categories.data?.length ?? 0)} />
-        <StatCard label="Payments recorded" value={String(paymentList.length)} />
+        <StatCard label="Users" value={String(users.data?.length ?? 0)} />
+        <StatCard label="Orders" value={String(orders.data?.length ?? 0)} />
         <StatCard label="Platform revenue" value={formatCurrency(totalRevenue)} accent />
       </div>
 
@@ -45,13 +51,6 @@ export default function AdminOverviewPage() {
           </ul>
         </div>
       )}
-
-      <div className="mt-6 rounded-xl border border-dashed border-border px-5 py-4 text-sm text-muted">
-        Order volume and total-user counts aren't shown here — those need the{" "}
-        <code className="rounded bg-ink/5 px-1 py-0.5 text-xs">GET /orders</code> and{" "}
-        <code className="rounded bg-ink/5 px-1 py-0.5 text-xs">GET /users</code> endpoints
-        that don't exist on the backend yet. See the Orders and Users tabs.
-      </div>
     </div>
   );
 }
